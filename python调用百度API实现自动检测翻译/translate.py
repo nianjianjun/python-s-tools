@@ -4,7 +4,7 @@ import sys
 import random
 import hashlib
 import requests
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLineEdit, QTextEdit
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLineEdit, QTextEdit, QStatusBar, QMessageBox
 
 def getTransText(in_text):
     q = in_text
@@ -14,7 +14,6 @@ def getTransText(in_text):
     appid = '20250420002337893'
     salt = random.randint(32768, 65536)
     secretKey = 'XDAEQWe319Di7PnVnQw6'  # 密钥
-
 
     # 生成sign
     sign = appid + q + str(salt) + secretKey
@@ -28,13 +27,15 @@ def getTransText(in_text):
         salt) + '&sign=' + sign
     url = "http://api.fanyi.baidu.com" + myurl
 
-    # 发送请求
-    url = url.encode('utf-8')
-    res = requests.get(url)
-
-    # 转换为字典类型
-    res = eval(res.text)
-    return (res["trans_result"][0]['dst'])
+    try:
+        # 发送请求
+        res = requests.get(url)
+        res.raise_for_status()  # 检查请求是否成功
+        # 转换为字典类型
+        res = eval(res.text)
+        return res["trans_result"][0]['dst']
+    except requests.RequestException as e:
+        raise Exception(f"网络请求失败: {e}")
 
 class TranslatorApp(QWidget):
     def __init__(self):
@@ -43,13 +44,12 @@ class TranslatorApp(QWidget):
 
     def initUI(self):
         self.setWindowTitle('翻译工具')
-        self.setGeometry(100, 100, 400, 300)
+        self.setGeometry(100, 100, 600, 400)
 
         layout = QVBoxLayout()
 
-        self.input_text = QLineEdit(self)
+        self.input_text = QTextEdit(self)
         self.input_text.setPlaceholderText('输入要翻译的文本')
-        self.input_text.setFixedHeight(50)  # 设置固定高度
         layout.addWidget(self.input_text)
 
         self.translate_button = QPushButton('翻译', self)
@@ -60,12 +60,25 @@ class TranslatorApp(QWidget):
         self.output_text.setPlaceholderText('翻译结果')
         layout.addWidget(self.output_text)
 
+        self.statusBar = QStatusBar()
+        layout.addWidget(self.statusBar)
+
         self.setLayout(layout)
 
     def translate(self):
-        in_text = self.input_text.text()
-        result = getTransText(in_text)
-        self.output_text.setText(result)
+        in_text = self.input_text.toPlainText()
+        if not in_text:
+            QMessageBox.warning(self, '警告', '请输入要翻译的文本')
+            return
+
+        self.statusBar.showMessage('正在翻译...')
+        try:
+            result = getTransText(in_text)
+            self.output_text.setText(result)
+            self.statusBar.showMessage('翻译完成')
+        except Exception as e:
+            QMessageBox.critical(self, '错误', str(e))
+            self.statusBar.showMessage('翻译失败')
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
