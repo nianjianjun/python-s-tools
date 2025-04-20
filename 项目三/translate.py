@@ -2,6 +2,7 @@
 # by: python 3.8 and PyQt5
 # coding:utf-8
 # aurhor: changye❀
+
 import sys
 import random
 import hashlib
