@@ -1,5 +1,6 @@
-#Created: 2025 - 4 - 17
-#by: python3.8 and PyQt5
+# Created: 18-04-2025
+# by: python 3.8 and PyQt5
+# aurhor: changye❀
 import sys
 import os
 from PyQt5 import QtCore, QtGui, QtWidgets

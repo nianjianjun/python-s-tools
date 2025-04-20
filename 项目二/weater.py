@@ -1,3 +1,6 @@
+# Created: 19-04-2025
+# by: python 3.8 and PyQt5
+# aurhor: changye❀
 import sys
 import urllib.request
 import json
