@@ -2,7 +2,6 @@
 # by: python 3.8 and PyQt5
 # coding:utf-8
 # aurhor: changye❀
-# coding: utf-8
 import sys
 import os
 import re
