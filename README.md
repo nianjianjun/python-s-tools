@@ -16,7 +16,7 @@ Python3 + 一堆百度来的库 + 玄学debug + 深夜咖啡因
 
 瑞幸真的yyds(˘▽˘)っ☕
 
-打包使用的是PyInstaller，方便快捷
+打包推荐使用PyInstaller，方便快捷
 
 📝 学习感悟
 
