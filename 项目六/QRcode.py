@@ -1,5 +1,5 @@
 # Created: 20-04-2025
-# by: python 3.8 and PyQt5
+# by: python 3.8 and PyQt5 and qrcode
 # coding:utf-8
 # aurhor: changye❀
 
