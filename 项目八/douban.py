@@ -1,3 +1,8 @@
+# Created: 08-05-2025
+# by: python 3.8  and bs4
+# coding:utf-8
+# aurhor: changye❀
+
 import requests
 from bs4 import BeautifulSoup
 import csv

@@ -1,3 +1,8 @@
+# Created: 07-05-2025
+# by: python 3.8 and PyQt5 and code128
+# coding:utf-8
+# aurhor: changye❀
+
 import sys
 from barcode import Code128
 from barcode.writer import ImageWriter
